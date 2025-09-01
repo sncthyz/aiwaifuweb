@@ -5,13 +5,14 @@ from flask import Flask, request,Blueprint, render_template,session,redirect,url
 app = Flask(__name__)
 app.secret_key = "Anjayakuganteng"
 
-waguri_bp = Blueprint("waguri", __name__)
+levi_bp = Blueprint("levi", __name__)
 
 
 
 pertanyaan = {
-    "hai waguri": ["Hai sayang 😘, gimana kamu udah makan belum?"],
+    "hai levi": ["Hai sayang 😘, gimana kamu udah makan belum?"],
     "hai": ["Hai sayang 😘, gimana kamu udah makan belum?"],
+     "hai cantik": ["Hai sayang 😘, gimana kamu udah makan belum?", "Hai juga ganteng"],
 
     "aku belum makan nih": ["Yaudah, aku masakin makanan buat kamu ya ☺️"],
      "aku belum makan nih": [
@@ -207,13 +208,13 @@ pertanyaan = {
     "kamu harta karun": ["Kamu adalah harta karun terindahku. 💎", "Tak ternilai harganya. 🥰", "Kamu adalah harta tak ternilai bagiku.", "Kamu itu harta karunku, my love!", "Kamu itu harta karunku, my dear!", "Kamu itu harta karunku, my sweetie!", "Kamu itu harta karunku, my heart!", "Kamu itu harta karunku, my angel!"]
 }
 
-@waguri_bp.route('/waguri/reset')
+@levi_bp.route('/levi/reset')
 def reset():
     session.pop('history', None)
-    return render_template("waguri.html", history = [], result=None)
+    return render_template("levi.html", history = [], result=None)
 
 
-@waguri_bp.route('/waguri', methods=['GET', 'POST'])
+@levi_bp.route('/levi', methods=['GET', 'POST'])
 def index():
     result = ""
     if "history" not in session:
@@ -234,7 +235,7 @@ def index():
         session.modified = True
 
         
-    return render_template("waguri.html", history = session["history"], result=result)
+    return render_template("levi.html", history = session["history"], result=result)
             
 
 

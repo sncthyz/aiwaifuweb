@@ -8,27 +8,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/fontawesome.min.css" integrity="sha512-J2Gce+WmOttffHOrVKLTlzxIalPXUMDbSfn5ADqp8Vj9EngnjNHr+jjiL3ZB8muEzo+K51gU10X+0eGqGNL7QA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
-<body class="bg-blue-900">
-    <div class="col ">
+<body class="bg-dark">
+    <div class="col fixed-top shadow-lg bg-dark">
             <div class="col">
-                <div style="background-color:rgb(0, 0, 0)">
-                    <div class="d-flex gap-5 p-3 container justify-content-center align-items-center ">
-                        <div class=" col-2 p-2">
-                        <img src="{{url_for('static', filename='waguri.jpg')}}" alt="tes" height="70" class="rounded-circle" alt="">
+                    <div class="d-flex p-3 align-items-center ">
+                            <a href="/"><i class="fa-solid text-start  fa-arrow-left me-2 text-white"></i></a>
+                        
+                        <img src="{{url_for('static', filename='jisung.jpg')}}" alt="tes" height="70" class="rounded-circle px-3" alt="">
 
-                        </div>
-                        <div class="col-8">
-                                                <p class="text-white fw-bold fs-2">Waguri</p>
+                   <div class=" col align-items-center place-items-center">
+                       <p class="text-white fw-bold fs-5 px-2 m-0">Jisung</p>
+        <p class=" flex-col text-secondary px-2 m-0" style="font-size:12px">Online</p>
 
-                        </div>
+                   </div>   
+ 
+    
+</div>
+
                           
                     </div>
 
                 </div>
                 </div>
                 </div>
-                
-        {% for anjay in history[:-1] %}
+               <div class=" pb-5 mb-5"  style=" padding-bottom: 120px; padding-top:120px;">
+   {% for anjay in history[:-1] %}
         <div class="align-items-center"  >
                 <div class="col p-3 align-items-center">
  <div class="col ms-auto bg-success rounded-3 w-50">
@@ -59,17 +63,19 @@
        </div>
        </div>
        {%endif%}
-<div class="p-3">
+               </div> 
+     
+<div class="p-3 fixed-bottom">
  <div class="col rounded-5 p-3 justify-content-center container " style=" background-color:rgb(50, 50, 50); ">
-  <form method="POST" action="/" class="justify-content-center container mx-auto">
+  <form method="POST" action="/jisung" class="justify-content-center container mx-auto">
     <div class="d-flex gap-2">
-                <input type="text"  class="bg-dark text-white form-control p-2 rounded-5" name="tempatmasukin">
-                        <button type="submit" class="btn btn-dark rounded-circle">
+                <input type="text"  class="bg-dark text-white form-control p-2 rounded-5" name="tempatmasukin" oninput=disabledTombol() autofocus id="inputprompt">
+                        <button type="submit" class="btn btn-dark rounded-circle" id="inputtombol" disabled>
                             <i class="fa-solid fa-arrow-up"></i>
                         </button>
 
     </form>
-        <form action="/reset">
+        <form action="/jisung/reset" method="GET">
                 <button type="submit" class="btn btn-dark rounded-circle">
                     <i class="fa-solid fa-rotate-right"></i>
                 </button>
@@ -88,16 +94,31 @@
    
     </div>
 
-        
-
-   
- 
-    
 
      <script>
      teks = "{{result}}";
      i=0;
      hasil = document.getElementById('hasil');
+     
+     if(window.history.replaceState){
+        window.history.replaceState(null,null, window.location.href);
+     }
+
+     function disabledTombol(){
+        const inputtombol = document.getElementById('inputtombol');
+        const inputprompt = document.getElementById('inputprompt');
+
+        if(inputprompt.value.trim() !== ""){
+            inputtombol.disabled = false;
+            inputtombol.classList.remove('disabled');
+        }
+        else {
+            inputtombol.disabled = true;
+            inputtombol.classList.add('disabled');
+        }
+
+     }
+     
 
 
     

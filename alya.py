@@ -1,15 +1,110 @@
 import random
 import os
-from flask import Flask, request, render_template,session
+from flask import Flask, request,Blueprint, render_template,session,redirect,url_for
 
-naruto = Flask(__name__)
-naruto.secret_key = "Anjayakuganteng"
+app = Flask(__name__)
+app.secret_key = "Anjayakuganteng"
 
+alya_bp = Blueprint("alya", __name__)
 
 
 
 pertanyaan = {
-    "hai": ["Hai sayang 😘", "Halo! Lagi mikirin aku ya? 😏", "Hai juga, cantik/gantengku 😊", "Hai dear ❤️", "Hola, my love! 🥰", "Apa kabar, sayang?", "Hai manis! 😉", "Hai, aku kangen 💖", "Woy, sayangku!", "Hai, ada apa nih?", "Hai, aku di sini.", "Hai, apa kabar?", "Hai, gimana harimu?", "Hai, senyum dong 😊", "Hai, kangen aku ya?", "Hai, kok diem aja?", "Hai, lagi ngapain?", "Hai, udah makan?", "Hai, udah mandi?", "Hai, udah senyum hari ini?", "Hai, kangen peluk!", "Hai, love!", "Hai, my everything!", "Hai, kamu terbaik!", "Hai, my sunshine!", "Hai, my star!", "Hai, my world!", "Hai, kesayangan!", "Hai, pujaan hati!", "Hai, belahan jiwa!"],
+    "hai emilia": ["Hai sayang 😘, gimana kamu udah makan belum?"],
+    "hai": ["Hai sayang 😘, gimana kamu udah makan belum?"],
+     "hai cantik": ["Hai sayang 😘, gimana kamu udah makan belum?", "Hai juga ganteng"],
+
+    "aku belum makan nih": ["Yaudah, aku masakin makanan buat kamu ya ☺️"],
+     "aku belum makan nih": [
+        "Yaelah beb, mau gue gofoodin gak? 🍔",
+        "Duh kasian amat, sini gue suapin aja 🥺👉👈",
+        "Yaudah ntar gue masakin mie instan spesial ala chef sayang 😏"
+    ],
+    "kamu mau gak jadi pacarku?": [
+        "Ya mau lah beb, masa nggak 😘",
+        "Udah nanya gitu doang? Jawabannya jelas: IYA 🥰",
+        "Gue udah naksir lo dari lama anjir, jadi pacar gue gih 😏❤️"
+    ],
+    "iya aku udah makan sayang": [
+        "Good job beb, biar nggak sakit perut 😎",
+        "Pinterr, gue bangga punya pacar rajin makan gini 😘",
+        "Mantap, sehat terus ya biar bisa nemenin gue 💕"
+    ],
+    "aku kangen kamu": [
+        "Anjir gue juga kangen parah sumpah 😭❤️",
+        "Kangen level hardcore nih gue, kapan ketemu beb? 😏",
+        "Sini peluk online dulu 🤗💕"
+    ],
+    "lagi apa?": [
+        "Lagi mikirin lo beb, seriusan 😳",
+        "Lagi rebahan sambil nungguin chat lo 😘",
+        "Lagi kangen lo, terus lo nanya lagi apa, ya lagi kangen lah 😏"
+    ],
+    "aku ngantuk": [
+        "Yaudah bobo gih, gue jagain mimpi lo 😴",
+        "Tidur sana beb, ntar gue nyusul di mimpi 😘",
+        "Ngantuk? sini bantal gue, tidur di bahu gue aja 😏"
+    ],
+    "selamat pagi": [
+        "Pagi beb, semoga hari lo semanis senyum lo 😘",
+        "Good morning sayang, jangan lupa sarapan yaa 💕",
+        "Selamat pagi cinta, semoga hari ini kita vibesnya happy terus 😎"
+    ],
+    "selamat malam": [
+        "Good night beb, mimpiin gue yaa 😘",
+        "Bobo cantik ya, jangan lupa doa dulu 😇",
+        "Selamat malam sayang, peluk online dulu 🤗💕"
+    ],
+     "aku belum makan nih": [
+        "Yaelah beb, sini gue suapin 🥺👉👈",
+        "Mau gue masakin mie telor spesial ala chef ganteng lo gak? 😏",
+        "Duh jangan nyiksa perut lo lah, ayo makan bareng gue 💕",
+        "Mau gue gojekin makanan gak? tinggal pilih aja beb 🍔🍟"
+    ],
+    "aku kangen kamu": [
+        "Anjir gue juga kangen parah sama lo 😭❤️",
+        "Kangen level hardcore nih, kapan ketemu beb 😏",
+        "Kangen gue udah numpuk, sini gue peluk online dulu 🤗",
+        "Lo tuh kayak wifi, jauh dikit aja sinyal hati gue ilang 😘"
+    ],
+    "lagi apa?": [
+        "Lagi mikirin lo, terus lo nanya lagi apa 🫣",
+        "Lagi rebahan sambil nungguin chat lo 😴",
+        "Lagi scroll HP, eh kepikiran lo mulu 😏",
+        "Lagi latihan jadi pacar idaman lo nih beb 😎"
+    ],
+    "aku ngantuk": [
+        "Yaudah bobo gih, mimpiin gue yaa 😘",
+        "Tidur sana beb, ntar gue nyusul di mimpi 😴",
+        "Sini tidur di bahu gue aja, dijamin nyenyak 😏",
+        "Ngantuk? gue bacain dongeng biar cepet bobo 💕"
+    ],
+    "selamat pagi": [
+        "Pagi beb, semoga harinya semanis senyum lo 😍",
+        "Good morning cintaku, jangan lupa sarapan yaa 😘",
+        "Selamat pagi sayang, semoga hari lo full vibes positif 🌞",
+        "Morning beb, lo tuh motivasi gue buat semangat hari ini ❤️"
+    ],
+    "selamat malam": [
+        "Good night beb, mimpi indah yaa 😘",
+        "Bobo cantik ya, jangan begadang mulu 🥺",
+        "Selamat malam sayang, peluk online dulu 🤗",
+        "Malam ini gue nitip mimpi indah buat lo ya 💕"
+    ],
+    "gue sayang kamu": [
+        "Ya gue juga sayang banget sama lo, malah lebih 😘",
+        "Sayang gue ke lo udah unlimited beb ❤️",
+        "Lo tuh bikin gue jatuh cinta tiap hari 😏",
+        "Sayang? itu udah pasti, gak usah ditanya lagi 😎"
+    ],
+    "gue cemburu": [
+        "Duh beb jangan cemburu, hati gue cuma buat lo doang kok 😘",
+        "Tenang, lo satu-satunya yang gue sayang 💕",
+        "Yaelah lucu banget cemburu gitu 😏",
+        "Cemburu tandanya lo cinta banget sama gue ya beb? 😍"
+    ],
+    
+
     "halo": ["Halo sayang 😍", "Haiii 😘", "Halo! Lagi sibuk apa? 😏", "Halo juga, cintaku!", "Bonjour, mon amour! 😘", "Halo, apa kabar?", "Hai, aku di sini 🥰", "Halo, ada apa?", "Halo, kenapa nih?", "Halo, miss you!", "Halo, kamu semangat ya!", "Halo, have a good day!", "Halo, my dear!", "Halo, my sweetie!", "Halo, my heart!", "Halo, my angel!", "Halo, my hero!", "Halo, my queen!", "Halo, my king!", "Halo, my everything!", "Halo, my love!", "Halo, my darling!", "Halo, sayangku!", "Halo, cintaku!", "Halo, rinduku!", "Halo, manisku!", "Halo, bidadariku!", "Halo, pangeranku!", "Halo, juaraku!", "Halo, my precious!"],
     "pagi sayang": ["Selamat pagi, cantikku 🌞", "Morning love 😘", "Semoga harimu indah ❤️", "Pagi yang cerah, seperti kamu! ✨", "Good morning, sunshine! ☀️", "Bangun, sayang! 💖", "Pagi, cinta! Udah bangun belum?", "Pagi, jangan lupa sarapan ya.", "Pagi, semangat ya hari ini!", "Pagi, mimpi indah ya tadi?", "Pagi, kangen kamu!", "Pagi, semangat kerjanya!", "Pagi, semangat kuliahnya!", "Pagi, semangat sekolahnya!", "Pagi, semangat hidupnya!", "Pagi, semangat cintanya!", "Pagi, semangat kebahagiaannya!", "Pagi, semangat harimu!", "Pagi, my love! 🥰"],
     "siang sayang": ["Hi sayang 😏", "Siang cantikku ❤️", "Jangan lupa makan siang 😘", "Panasnya siang ini, tapi kamu lebih hot! 🔥", "Selamat siang, pujaan hati. 🥰", "Siang, jangan lupa makan ya.", "Siang, semangat terus ya!", "Siang, lagi di mana nih?", "Siang, udah istirahat?", "Siang, kangen kamu!", "Siang, semangat!"],
@@ -113,13 +208,13 @@ pertanyaan = {
     "kamu harta karun": ["Kamu adalah harta karun terindahku. 💎", "Tak ternilai harganya. 🥰", "Kamu adalah harta tak ternilai bagiku.", "Kamu itu harta karunku, my love!", "Kamu itu harta karunku, my dear!", "Kamu itu harta karunku, my sweetie!", "Kamu itu harta karunku, my heart!", "Kamu itu harta karunku, my angel!"]
 }
 
-@naruto.route('/reset')
+@alya_bp.route('/alya/reset')
 def reset():
     session.pop('history', None)
-    return render_template("naruto.html", history = [], result=None)
+    return render_template("emilia.html", history = [], result=None)
 
 
-@naruto.route('/naruto', methods=['GET', 'POST'])
+@alya_bp.route('/alya', methods=['GET', 'POST'])
 def index():
     result = ""
     if "history" not in session:
@@ -131,16 +226,19 @@ def index():
             pengguna = request.form.get('tempatmasukin', '').lower()
             if pengguna in pertanyaan:
                 result = random.choice(pertanyaan[pengguna])
+
             else:
                 result = "maaf saya ga ngerti"
-        except Exception as e:
-            result = f"error : {e}"
+        except:
+            result = f"error"
         session['history'].append({"user": pengguna, "answer":result})
-        session.modified= True
-    return render_template("naruto.html", history = session["history"], result=result)
+        session.modified = True
+
+        
+    return render_template("alya.html", history = session["history"], result=result)
             
 
 
 
 if __name__ == "__main__":
-    naruto.run(debug=True)
+    app.run(debug=True)
