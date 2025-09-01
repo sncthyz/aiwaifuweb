@@ -69,8 +69,8 @@
  <div class="col rounded-5 p-3 justify-content-center container " style=" background-color:rgb(50, 50, 50); ">
   <form method="POST" action="/waguri" class="justify-content-center container mx-auto">
     <div class="d-flex gap-2">
-                <input type="text"  class="bg-dark text-white form-control p-2 rounded-5" name="tempatmasukin">
-                        <button type="submit" class="btn btn-dark rounded-circle">
+                <input type="text"  class="bg-dark text-white form-control p-2 rounded-5" name="tempatmasukin" oninput=disabledTombol() autofocus id="inputprompt">
+                        <button type="submit" class="btn btn-dark rounded-circle" id="inputtombol" disabled>
                             <i class="fa-solid fa-arrow-up"></i>
                         </button>
 
@@ -99,6 +99,22 @@
      teks = "{{result}}";
      i=0;
      hasil = document.getElementById('hasil');
+
+
+     function disabledTombol(){
+        const inputtombol = document.getElementById('inputtombol');
+        const inputprompt = document.getElementById('inputprompt');
+
+        if(inputprompt.value.trim() !== ""){
+            inputtombol.disabled = false;
+            inputtombol.classList.remove('disabled');
+        }
+        else {
+            inputtombol.disabled = true;
+            inputtombol.classList.add('disabled');
+        }
+
+     }
      
 
 
