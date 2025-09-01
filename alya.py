@@ -211,7 +211,7 @@ pertanyaan = {
 @alya_bp.route('/alya/reset')
 def reset():
     session.pop('history', None)
-    return render_template("emilia.html", history = [], result=None)
+    return render_template("alya.html", history = [], result=None)
 
 
 @alya_bp.route('/alya', methods=['GET', 'POST'])
