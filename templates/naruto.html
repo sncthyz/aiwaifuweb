@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/fontawesome.min.css" integrity="sha512-J2Gce+WmOttffHOrVKLTlzxIalPXUMDbSfn5ADqp8Vj9EngnjNHr+jjiL3ZB8muEzo+K51gU10X+0eGqGNL7QA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body class="bg-blue-900">
+    <div class="col ">
+            <div class="col">
+                <div style="background-color:rgb(0, 0, 0)">
+                    <div class="d-flex gap-5 p-3 container justify-content-center align-items-center ">
+                        <div class=" col-2 p-2">
+                        <img src="{{url_for('static', filename='waguri.jpg')}}" alt="tes" height="70" class="rounded-circle" alt="">
+
+                        </div>
+                        <div class="col-8">
+                                                <p class="text-white fw-bold fs-2">Waguri</p>
+
+                        </div>
+                          
+                    </div>
+
+                </div>
+                </div>
+                </div>
+                
+        {% for anjay in history[:-1] %}
+        <div class="align-items-center"  >
+                <div class="col p-3 align-items-center">
+ <div class="col ms-auto bg-success rounded-3 w-50">
+        <p class=" p-3 text-white">{{anjay.user}}</p>
+
+        </div>
+        </div>
+       
+  <div class="col p-3">
+ <div class="col bg-success rounded-3 w-50 mt-2">
+        <p class=" p-3 text-white" >{{anjay.answer}}</p>
+
+        </div>
+        </div> 
+        </div>
+   
+
+        {% endfor %}
+       {% if history%} 
+         <div class="col p-3">
+ <div class="col bg-success ms-auto rounded-3 w-50 mt-2">
+       <p class="text-white p-3"> {{history[-1].user}}</p>
+       </div>
+       </div>
+         <div class="col p-3">
+ <div class="col bg-success rounded-3 p-3 w-50 mt-2">
+       <p class="text-white " id="hasil" class="p-3"></p>
+       </div>
+       </div>
+       {%endif%}
+<div class="p-3">
+ <div class="col rounded-5 p-3 justify-content-center container " style=" background-color:rgb(50, 50, 50); ">
+  <form method="POST" action="/" class="justify-content-center container mx-auto">
+    <div class="d-flex gap-2">
+                <input type="text"  class="bg-dark text-white form-control p-2 rounded-5" name="tempatmasukin">
+                        <button type="submit" class="btn btn-dark rounded-circle">
+                            <i class="fa-solid fa-arrow-up"></i>
+                        </button>
+
+    </form>
+        <form action="/reset">
+                <button type="submit" class="btn btn-dark rounded-circle">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+    
+
+
+
+    </div>
+    
+
+       </div>
+</div>
+      
+        
+    </form>
+   
+    </div>
+
+        
+
+   
+ 
+    
+
+     <script>
+     teks = "{{result}}";
+     i=0;
+     hasil = document.getElementById('hasil');
+
+
+    
+
+
+
+
+     function efekKetiK(){
+        if(i < teks.length){
+            hasil.innerHTML+= teks.charAt(i);
+            setTimeout(efekKetiK, 90);
+            i++;
+        }
+     }
+     if(teks){
+        efekKetiK();
+     }
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    
+</body>
+</html>
